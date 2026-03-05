@@ -1,0 +1,146 @@
+:root {
+  --navy: #1f4f7d;
+  --navy-dark: #0f3659;
+  --light-gray: #d8d8da;
+  --panel-bg: #f1f1f2;
+  --text: #0b1e2e;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--light-gray);
+  color: var(--text);
+}
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 2rem;
+  background: linear-gradient(#fdfdfd, #e8eaec);
+  border-bottom: 2px solid #c5c9cf;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+h1 {
+  margin: 0.2rem 0 0;
+  color: var(--navy-dark);
+  font-size: 1.8rem;
+}
+
+.portal-link {
+  background: var(--navy);
+  color: var(--white);
+  text-decoration: none;
+  padding: 0.7rem 1.1rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+}
+
+.main-nav {
+  background: linear-gradient(#2b648f, #1f4f7d);
+  padding: 0 1.2rem;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.main-nav a {
+  color: var(--white);
+  text-decoration: none;
+  padding: 1rem 1.2rem;
+  font-weight: 700;
+}
+
+.main-nav a:hover,
+.main-nav a:focus-visible {
+  background: #17456e;
+}
+
+.page-layout {
+  display: grid;
+  grid-template-columns: minmax(190px, 260px) 1fr;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 1.2rem auto 2rem;
+  padding: 0 1rem;
+}
+
+.side-panel,
+.content-panel {
+  background: var(--panel-bg);
+  border-radius: 0.45rem;
+  border: 1px solid #c9cbd0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.side-panel {
+  padding: 1rem;
+}
+
+.side-panel h2,
+.content-panel h2 {
+  margin-top: 0;
+  color: var(--navy);
+}
+
+.content-panel {
+  padding: 1.2rem;
+}
+
+.section-intro {
+  margin-bottom: 1rem;
+}
+
+.service-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.9rem;
+}
+
+.service-list li {
+  background: #ececec;
+  border-top: 5px solid #2f90cb;
+}
+
+.service-list a {
+  display: block;
+  padding: 1.2rem 1rem;
+  color: #0e2c44;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.service-list a:hover,
+.service-list a:focus-visible {
+  background: #dde7ef;
+}
+
+@media (max-width: 760px) {
+  .top-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page-layout {
+    grid-template-columns: 1fr;
+  }
+}
