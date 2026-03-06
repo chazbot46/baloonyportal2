@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Domain Lookup - Baloony Electronic Services</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .lookup-form {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin: 1.5rem 0;
+      }
+
+      .lookup-form input {
+        flex: 1;
+        min-width: 240px;
+        padding: 0.85rem 1rem;
+        border: 1px solid #cfd6e4;
+        border-radius: 0.75rem;
+        font: inherit;
+      }
+
+      .lookup-form button {
+        padding: 0.85rem 1.2rem;
+        border: none;
+        border-radius: 0.75rem;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .lookup-result {
+        margin-top: 1.5rem;
+        padding: 1.25rem;
+        border: 1px solid #cfd6e4;
+        border-radius: 1rem;
+      }
+
+      .lookup-result.hidden {
+        display: none;
+      }
+
+      .lookup-result h3 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+      }
+
+      .lookup-result p {
+        margin: 0.4rem 0;
+      }
+
+      .status {
+        font-weight: 600;
+      }
+
+      .not-found {
+        color: #a33;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top-header">
+      <div>
+        <p class="eyebrow">Bal-nic</p>
+        <h1>Baloony Electronic Services</h1>
+      </div>
+    </header>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">Menu</a>
+      <a href="lookup.html" aria-current="page">Domain Lookup</a>
+    </nav>
+
+    <main class="page-layout" id="services">
+      <aside class="side-panel">
+        <h2>Menu</h2>
+        <p>Search for a <code>baloony.xyz</code> domain and view its current status and owner.</p>
+      </aside>
+
+      <section class="content-panel">
+        <h2>Domain Lookup</h2>
+        <p class="section-intro">
+          Enter a Baloony domain below to check whether it is active, inactive, reserved, or suspended.
+        </p>
+
+        <form class="lookup-form" id="lookupForm">
+          <input
+            type="text"
+            id="domainInput"
+            name="domain"
+            placeholder="Enter domain, for example: discord.baloony.xyz"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button type="submit">Search</button>
+        </form>
+
+        <div class="lookup-result hidden" id="lookupResult" aria-live="polite">
+          <h3 id="resultDomain">Domain</h3>
+          <p><strong>Owner:</strong> <span id="resultOwner"></span></p>
+          <p><strong>Status:</strong> <span class="status" id="resultStatus"></span></p>
+          <p class="not-found hidden" id="notFoundMessage">This domain was not found in the Baloony registry.</p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const domains = {
+        "discord.baloony.xyz": {
+          owner: "Baloony Studio",
+          status: "Active"
+        },
+        "domain.baloony.xyz": {
+          owner: "Baloonian Network Information Center",
+          status: "Active"
+        },
+        "post.baloony.xyz": {
+          owner: "Balgov",
+          status: "Active"
+        },
+        "president.baloony.xyz": {
+          owner: "Finn",
+          status: "Reserved"
+        },
+        "go.baloony.xyz": {
+          owner: "Baloonian Network Information Center",
+          status: "Active"
+        },
+        "nic.baloony.xyz": {
+          owner: "Baloonian Network Information Center",
+          status: "Active"
+        },
+        "rec.baloony.xyz": {
+          owner: "Baloony Studio",
+          status: "Active"
+        },
+        "sixtysix.baloony.xyz": {
+          owner: "Baloonian Network Information Center",
+          status: "Active"
+        }
+      };
+
+      const lookupForm = document.getElementById("lookupForm");
+      const domainInput = document.getElementById("domainInput");
+      const lookupResult = document.getElementById("lookupResult");
+      const resultDomain = document.getElementById("resultDomain");
+      const resultOwner = document.getElementById("resultOwner");
+      const resultStatus = document.getElementById("resultStatus");
+      const notFoundMessage = document.getElementById("notFoundMessage");
+
+      lookupForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const query = domainInput.value.trim().toLowerCase();
+        const result = domains[query];
+
+        lookupResult.classList.remove("hidden");
+
+        if (result) {
+          resultDomain.textContent = query;
+          resultOwner.textContent = result.owner;
+          resultStatus.textContent = result.status;
+          resultOwner.parentElement.classList.remove("hidden");
+          resultStatus.parentElement.classList.remove("hidden");
+          notFoundMessage.classList.add("hidden");
+        } else {
+          resultDomain.textContent = query || "Unknown domain";
+          resultOwner.textContent = "";
+          resultStatus.textContent = "";
+          resultOwner.parentElement.classList.add("hidden");
+          resultStatus.parentElement.classList.add("hidden");
+          notFoundMessage.classList.remove("hidden");
+        }
+      });
+    </script>
+  </body>
+</html>
