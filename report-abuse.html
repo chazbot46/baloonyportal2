@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Report Abuse - Baloony Electronic Services</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .embed-wrapper {
+      margin-top: 1.5rem;
+      border: 1px solid #cfd6e4;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: #fff;
+      min-height: 700px;
+    }
+
+    .embed-wrapper iframe {
+      display: block;
+      width: 100%;
+      min-height: 700px;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="top-header">
+    <div>
+      <p class="eyebrow">Bal-nic</p>
+      <h1>Baloony Electronic Services</h1>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Menu</a>
+  </nav>
+
+  <main class="page-layout" id="services">
+    <aside class="side-panel">
+      <h2>Report abuse</h2>
+      <p>Use this page to report abuse involving Baloony services, domains, or links.</p>
+    </aside>
+
+    <section class="content-panel">
+      <h2>Report Abuse</h2>
+      <p class="section-intro">
+        Submit an abuse report using the form below. Please provide as much detail as possible.
+      </p>
+
+      <div class="embed-wrapper">
+        <iframe
+          data-tally-src="https://tally.so/embed/QKA65p?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+          loading="lazy"
+          width="100%"
+          height="700"
+          frameborder="0"
+          marginheight="0"
+          marginwidth="0"
+          title="Report Abuse"
+        ></iframe>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    var d = document, w = "https://tally.so/widgets/embed.js", v = function() {
+      if (typeof Tally !== "undefined") {
+        Tally.loadEmbeds();
+      } else {
+        d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e) {
+          e.src = e.dataset.tallySrc;
+        });
+      }
+    };
+
+    if (typeof Tally !== "undefined") {
+      v();
+    } else if (d.querySelector('script[src="' + w + '"]') == null) {
+      var s = d.createElement("script");
+      s.src = w;
+      s.onload = v;
+      s.onerror = v;
+      d.body.appendChild(s);
+    }
+  </script>
+</body>
+</html>
