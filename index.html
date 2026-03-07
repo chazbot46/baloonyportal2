@@ -12,7 +12,13 @@
         <p class="eyebrow">Bal-nic</p>
         <h1>Baloony Electronic Services</h1>
       </div>
-      <button onclick="loginDiscord()" class="portal-btn">Login with Discord</button>
+
+      <div class="auth-area">
+        <span id="user">Not logged in</span>
+        <button id="authButton" onclick="loginDiscord()" class="portal-btn">
+          Login with Discord
+        </button>
+      </div>
     </header>
 
     <nav class="main-nav" aria-label="Main navigation">
@@ -65,6 +71,52 @@
       function loginDiscord() {
         window.location.href = "https://api.nic.baloony.xyz/auth/discord";
       }
+
+      async function logoutDiscord() {
+        try {
+          await fetch("https://api.nic.baloony.xyz/auth/logout", {
+            method: "POST",
+            credentials: "include"
+          });
+        } catch (err) {
+          console.error("Logout failed", err);
+        }
+
+        window.location.reload();
+      }
+
+      async function checkLogin() {
+        const userEl = document.getElementById("user");
+        const authButton = document.getElementById("authButton");
+
+        try {
+          const res = await fetch("https://api.nic.baloony.xyz/api/me", {
+            credentials: "include"
+          });
+
+          const data = await res.json();
+
+          if (data.loggedIn) {
+            userEl.innerText = "Logged in as " + data.user.username;
+            authButton.innerText = "Log out";
+            authButton.className = "logout-btn";
+            authButton.onclick = logoutDiscord;
+          } else {
+            userEl.innerText = "Not logged in";
+            authButton.innerText = "Login with Discord";
+            authButton.className = "portal-btn";
+            authButton.onclick = loginDiscord;
+          }
+        } catch (err) {
+          console.error("Login check failed", err);
+          userEl.innerText = "Not logged in";
+          authButton.innerText = "Login with Discord";
+          authButton.className = "portal-btn";
+          authButton.onclick = loginDiscord;
+        }
+      }
+
+      checkLogin();
     </script>
   </body>
 </html>
