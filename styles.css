@@ -143,10 +143,4 @@ h1 {
   .page-layout {
     grid-template-columns: 1fr;
   }
-
-  .top-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 }
