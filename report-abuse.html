@@ -29,6 +29,13 @@
       <p class="eyebrow">Bal-nic</p>
       <h1>Baloony Electronic Services</h1>
     </div>
+
+    <div class="auth-area">
+      <span id="user">Checking login...</span>
+      <button id="authButton" onclick="loginDiscord()" class="portal-btn">
+        Login with Discord
+      </button>
+    </div>
   </header>
 
   <nav class="main-nav" aria-label="Main navigation">
@@ -40,6 +47,12 @@
       <h2>Report abuse</h2>
       <p>Use this page to report abuse involving Baloony services, domains, or links.</p>
     </aside>
+
+    <section class="content-panel">
+      <h2>Report abuse</h2>
+      <p class="section-intro">
+        Submit a report using the form below.
+      </p>
 
       <div class="embed-wrapper">
         <iframe
@@ -61,7 +74,7 @@
       if (typeof Tally !== "undefined") {
         Tally.loadEmbeds();
       } else {
-        d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e) {
+        d.querySelectorAll('iframe[data-tally-src]:not([src])').forEach(function(e) {
           e.src = e.dataset.tallySrc;
         });
       }
@@ -77,5 +90,7 @@
       d.body.appendChild(s);
     }
   </script>
+
+  <script src="auth.js"></script>
 </body>
 </html>
