@@ -14,7 +14,7 @@
       </div>
 
       <div class="auth-area">
-        <span id="user">Not logged in</span>
+        <span id="user">Checking login...</span>
         <button id="authButton" onclick="loginDiscord()" class="portal-btn">
           Login with Discord
         </button>
@@ -72,17 +72,8 @@
         window.location.href = "https://api.nic.baloony.xyz/auth/discord";
       }
 
-      async function logoutDiscord() {
-        try {
-          await fetch("https://api.nic.baloony.xyz/auth/logout", {
-            method: "POST",
-            credentials: "include"
-          });
-        } catch (err) {
-          console.error("Logout failed", err);
-        }
-
-        window.location.reload();
+      function logoutDiscord() {
+        window.location.href = "https://api.nic.baloony.xyz/logout";
       }
 
       async function checkLogin() {
