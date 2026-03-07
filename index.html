@@ -1,69 +1,62 @@
-<header class="top-header" style="display:flex; justify-content:space-between; align-items:center;">
-  
+<header class="top-header">
   <div>
     <p class="eyebrow">BAL-NIC</p>
     <h1>Baloony Electronic Services</h1>
   </div>
 
-  <button class="portal-link" onclick="loginDiscord()">
+  <button class="portal-link" type="button" onclick="loginDiscord()">
     Login with Discord
   </button>
-
 </header>
+
+<nav class="main-nav" aria-label="Main navigation">
+  <a href="#services">Menu</a>
+</nav>
+
+<main class="page-layout" id="services">
+  <aside class="side-panel">
+    <h2>Menu</h2>
+    <p>Select one of the electronic services.</p>
+  </aside>
+
+  <section class="content-panel">
+    <h2>Electronic Services</h2>
+    <p class="section-intro">
+      Members of Baloony can use the services below to submit requests or view information.
+    </p>
+
+    <ul class="service-list">
+      <li>
+        <a href="https://formcord.app/1434673217582268477/VKHamKo1gd" target="_blank" rel="noopener noreferrer">
+          Register Domain
+        </a>
+      </li>
+      <li>
+        <a href="https://formcord.app/1434673217582268477/7cyDwegivd" target="_blank" rel="noopener noreferrer">
+          Set up Bluesky handle
+        </a>
+      </li>
+      <li>
+        <a href="https://formcord.app/1434673217582268477/KoNLw211MV" target="_blank" rel="noopener noreferrer">
+          Request short link
+        </a>
+      </li>
+      <li>
+        <a href="lookup.html">
+          Domain Lookup
+        </a>
+      </li>
+      <li>
+        <a href="report-abuse.html">
+          Report abuse
+        </a>
+      </li>
+    </ul>
+  </section>
+</main>
 
 <script>
 function loginDiscord() {
   window.location.href = "https://api.nic.baloony.xyz/auth/discord";
 }
 </script>
-      
-      </div>
-    </header>
-
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="#services">Menu</a>
-    </nav>
-
-    <main class="page-layout" id="services">
-      <aside class="side-panel">
-        <h2>Menu</h2>
-        <p>Select one of the electronic services.</p>
-      </aside>
-
-      <section class="content-panel">
-        <h2>Electronic Services</h2>
-        <p class="section-intro">
-          Members of Baloony can use the services below to submit requests or view information.
-        </p>
-
-        <ul class="service-list">
-  <li>
-    <a href="https://formcord.app/1434673217582268477/VKHamKo1gd" target="_blank" rel="noopener noreferrer">
-      Register Domain
-    </a>
-  </li>
-  <li>
-    <a href="https://formcord.app/1434673217582268477/7cyDwegivd" target="_blank" rel="noopener noreferrer">
-      Set up Bluesky handle
-    </a>
-  </li>
-  <li>
-    <a href="https://formcord.app/1434673217582268477/KoNLw211MV" target="_blank" rel="noopener noreferrer">
-      Request short link
-    </a>
-  </li>
-  <li>
-    <a href="lookup.html">
-      Domain Lookup
-    </a>
-  </li>
-  <li>
-    <a href="report-abuse.html">
-      Report abuse
-    </a>
-  </li>
-</ul>
-      </section>
-    </main>
-  </body>
-</html>
