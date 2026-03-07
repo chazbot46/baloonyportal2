@@ -52,6 +52,23 @@ h1 {
   font-weight: 600;
 }
 
+.portal-btn {
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  padding: 0.7rem 1.1rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.portal-btn:hover,
+.portal-btn:focus-visible {
+  background: var(--navy-dark);
+}
+
 .main-nav {
   background: linear-gradient(#2b648f, #1f4f7d);
   padding: 0 1.2rem;
