@@ -43,30 +43,34 @@ h1 {
   font-size: 1.8rem;
 }
 
-.portal-link {
-  background: var(--navy);
-  color: var(--white);
-  text-decoration: none;
-  padding: 0.7rem 1.1rem;
-  border-radius: 0.25rem;
-  font-weight: 600;
-}
-
+/* Updated Button Styling to Kill Default HTML Look */
 .portal-btn {
-  background: var(--navy);
+  background-color: var(--navy);
   color: var(--white);
-  border: none;
   padding: 0.7rem 1.1rem;
   border-radius: 0.25rem;
   font-weight: 600;
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 0.95rem;
   cursor: pointer;
+  
+  /* These lines specifically remove the "Classic" look */
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  box-shadow: none;
+  display: inline-block;
+  text-align: center;
+  transition: background 0.2s ease;
 }
 
-.portal-btn:hover,
-.portal-btn:focus-visible {
-  background: var(--navy-dark);
+.portal-btn:hover {
+  background-color: var(--navy-dark);
+}
+
+.portal-btn:active {
+  transform: translateY(1px);
 }
 
 .main-nav {
