@@ -43,34 +43,34 @@ h1 {
   font-size: 1.8rem;
 }
 
-/* Updated Button Styling to Kill Default HTML Look */
-.portal-btn {
-  background-color: var(--navy);
-  color: var(--white);
-  padding: 0.7rem 1.1rem;
-  border-radius: 0.25rem;
-  font-weight: 600;
-  font-family: inherit;
-  font-size: 0.95rem;
-  cursor: pointer;
+/* HIGH-SPECIFICITY BUTTON STYLING */
+button.portal-btn {
+  background-color: var(--navy) !important;
+  color: var(--white) !important;
+  padding: 0.7rem 1.1rem !important;
+  border-radius: 0.25rem !important;
+  font-weight: 600 !important;
+  font-family: inherit !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
   
-  /* These lines specifically remove the "Classic" look */
-  border: none;
-  appearance: none;
-  -webkit-appearance: none;
-  outline: none;
-  box-shadow: none;
+  /* FORCE REMOVE BROWSER DEFAULTS */
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  
+  /* POSITIONING */
   display: inline-block;
   text-align: center;
+  text-decoration: none;
   transition: background 0.2s ease;
 }
 
-.portal-btn:hover {
-  background-color: var(--navy-dark);
-}
-
-.portal-btn:active {
-  transform: translateY(1px);
+button.portal-btn:hover {
+  background-color: var(--navy-dark) !important;
 }
 
 .main-nav {
