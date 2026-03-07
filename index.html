@@ -12,6 +12,7 @@
         <p class="eyebrow">Bal-nic</p>
         <h1>Baloony Electronic Services</h1>
       </div>
+      <button onclick="loginDiscord()" class="portal-btn">Login with Discord</button>
     </header>
 
     <nav class="main-nav" aria-label="Main navigation">
@@ -31,33 +32,39 @@
         </p>
 
         <ul class="service-list">
-  <li>
-    <a href="https://formcord.app/1434673217582268477/VKHamKo1gd" target="_blank" rel="noopener noreferrer">
-      Register Domain
-    </a>
-  </li>
-  <li>
-    <a href="https://formcord.app/1434673217582268477/7cyDwegivd" target="_blank" rel="noopener noreferrer">
-      Set up Bluesky handle
-    </a>
-  </li>
-  <li>
-    <a href="https://formcord.app/1434673217582268477/KoNLw211MV" target="_blank" rel="noopener noreferrer">
-      Request short link
-    </a>
-  </li>
-  <li>
-    <a href="lookup.html">
-      Domain Lookup
-    </a>
-  </li>
-  <li>
-    <a href="report-abuse.html">
-      Report abuse
-    </a>
-  </li>
-</ul>
+          <li>
+            <a href="https://formcord.app/1434673217582268477/VKHamKo1gd" target="_blank" rel="noopener noreferrer">
+              Register Domain
+            </a>
+          </li>
+          <li>
+            <a href="https://formcord.app/1434673217582268477/7cyDwegivd" target="_blank" rel="noopener noreferrer">
+              Set up Bluesky handle
+            </a>
+          </li>
+          <li>
+            <a href="https://formcord.app/1434673217582268477/KoNLw211MV" target="_blank" rel="noopener noreferrer">
+              Request short link
+            </a>
+          </li>
+          <li>
+            <a href="lookup.html">
+              Domain Lookup
+            </a>
+          </li>
+          <li>
+            <a href="report-abuse.html">
+              Report abuse
+            </a>
+          </li>
+        </ul>
       </section>
     </main>
+
+    <script>
+      function loginDiscord() {
+        window.location.href = "https://api.nic.baloony.xyz/auth/discord";
+      }
+    </script>
   </body>
 </html>
