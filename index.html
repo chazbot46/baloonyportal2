@@ -9,15 +9,17 @@
   <body>
     <header class="top-header">
       <div>
+
+        <div class="auth-area">
+    <span id="user">Checking login...</span>
+    <button id="authButton" class="portal-btn" onclick="loginDiscord()">
+      Login with Discord
+    </button>
+  </div>
+</header>
+    
         <p class="eyebrow">Bal-nic</p>
         <h1>Baloony Electronic Services</h1>
-      </div>
-
-      <div class="auth-area">
-        <span id="user">Checking login...</span>
-        <button id="authButton" onclick="loginDiscord()" class="portal-btn">
-          Login with Discord
-        </button>
       </div>
     </header>
 
@@ -38,76 +40,33 @@
         </p>
 
         <ul class="service-list">
-          <li>
-            <a href="https://formcord.app/1434673217582268477/VKHamKo1gd" target="_blank" rel="noopener noreferrer">
-              Register Domain
-            </a>
-          </li>
-          <li>
-            <a href="https://formcord.app/1434673217582268477/7cyDwegivd" target="_blank" rel="noopener noreferrer">
-              Set up Bluesky handle
-            </a>
-          </li>
-          <li>
-            <a href="https://formcord.app/1434673217582268477/KoNLw211MV" target="_blank" rel="noopener noreferrer">
-              Request short link
-            </a>
-          </li>
-          <li>
-            <a href="lookup.html">
-              Domain Lookup
-            </a>
-          </li>
-          <li>
-            <a href="report-abuse.html">
-              Report abuse
-            </a>
-          </li>
-        </ul>
+  <li>
+    <a href="https://formcord.app/1434673217582268477/VKHamKo1gd" target="_blank" rel="noopener noreferrer">
+      Register Domain
+    </a>
+  </li>
+  <li>
+    <a href="https://formcord.app/1434673217582268477/7cyDwegivd" target="_blank" rel="noopener noreferrer">
+      Set up Bluesky handle
+    </a>
+  </li>
+  <li>
+    <a href="https://formcord.app/1434673217582268477/KoNLw211MV" target="_blank" rel="noopener noreferrer">
+      Request short link
+    </a>
+  </li>
+  <li>
+    <a href="lookup.html">
+      Domain Lookup
+    </a>
+  </li>
+  <li>
+    <a href="report-abuse.html">
+      Report abuse
+    </a>
+  </li>
+</ul>
       </section>
     </main>
-
-    <script>
-      function loginDiscord() {
-        window.location.href = "https://api.nic.baloony.xyz/auth/discord";
-      }
-
-      function logoutDiscord() {
-        window.location.href = "https://api.nic.baloony.xyz/logout";
-      }
-
-      async function checkLogin() {
-        const userEl = document.getElementById("user");
-        const authButton = document.getElementById("authButton");
-
-        try {
-          const res = await fetch("https://api.nic.baloony.xyz/api/me", {
-            credentials: "include"
-          });
-
-          const data = await res.json();
-
-          if (data.loggedIn) {
-            userEl.innerText = "Logged in as " + data.user.username;
-            authButton.innerText = "Log out";
-            authButton.className = "logout-btn";
-            authButton.onclick = logoutDiscord;
-          } else {
-            userEl.innerText = "Not logged in";
-            authButton.innerText = "Login with Discord";
-            authButton.className = "portal-btn";
-            authButton.onclick = loginDiscord;
-          }
-        } catch (err) {
-          console.error("Login check failed", err);
-          userEl.innerText = "Not logged in";
-          authButton.innerText = "Login with Discord";
-          authButton.className = "portal-btn";
-          authButton.onclick = loginDiscord;
-        }
-      }
-
-      checkLogin();
-    </script>
   </body>
 </html>
