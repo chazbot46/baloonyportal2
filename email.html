@@ -234,12 +234,12 @@
         if (data.loggedIn) {
           currentLoggedInUser = data.user;
           createMailboxBtn.disabled = false;
-          mailboxAccessNote.textContent = "You are logged in and can request a mailbox.";
+          mailboxAccessNote.textContent = "You are logged in and can create a mailbox.";
         } else {
           currentLoggedInUser = null;
           createMailboxBtn.disabled = true;
           mailboxFormWrapper.classList.add("hidden");
-          mailboxAccessNote.textContent = "You must be logged in to request a mailbox.";
+          mailboxAccessNote.textContent = "You must be logged in to create a mailbox.";
         }
       } catch (err) {
         currentLoggedInUser = null;
