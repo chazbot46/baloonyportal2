@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Short Links - Baloony Electronic Services</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .shortlink-form {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .form-row {
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .form-row label {
+      font-weight: 700;
+    }
+
+    .shortlink-form input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1px solid #cfd6e4;
+      border-radius: 0.75rem;
+      font: inherit;
+    }
+
+    .form-note {
+      color: #475569;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .action-btn {
+      appearance: none;
+      border: none;
+      background: linear-gradient(#2b648f, #1f4f7d);
+      color: #fff;
+      padding: 0.9rem 1.2rem;
+      border-radius: 0.5rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .action-btn:hover,
+    .action-btn:focus-visible {
+      background: linear-gradient(#24597f, #173f63);
+    }
+
+    .secondary-btn {
+      appearance: none;
+      border: 1px solid #b8bcc2;
+      background: #f3f4f6;
+      color: #334155;
+      padding: 0.9rem 1.2rem;
+      border-radius: 0.5rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .secondary-btn:hover,
+    .secondary-btn:focus-visible {
+      background: #e6e8eb;
+    }
+
+    .secondary-btn:disabled,
+    .action-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .status-message {
+      margin-top: 0.5rem;
+      font-weight: 700;
+    }
+
+    .status-success {
+      color: #166534;
+    }
+
+    .status-error {
+      color: #b91c1c;
+    }
+
+    .status-neutral {
+      color: #334155;
+    }
+
+    .result-box {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      border: 1px solid #cfd6e4;
+      border-radius: 1rem;
+      background: #fff;
+    }
+
+    .result-box.hidden {
+      display: none;
+    }
+
+    .result-link {
+      display: block;
+      margin: 0.75rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      word-break: break-all;
+      color: #0f3659;
+      text-decoration: none;
+    }
+
+    .result-link:hover,
+    .result-link:focus-visible {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header class="top-header">
+    <div>
+      <p class="eyebrow">Bal-nic</p>
+      <h1>Baloony Electronic Services</h1>
+    </div>
+
+    <div class="auth-area">
+      <span id="user">Checking login...</span>
+      <button id="authButton" onclick="loginDiscord()" class="portal-btn">
+        Login with Discord
+      </button>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Menu</a>
+  </nav>
+
+  <main class="page-layout" id="services">
+    <aside class="side-panel">
+      <h2>Short Links</h2>
+      <p>Create short links on <code>go.baloony.xyz</code> that redirect to longer URLs.</p>
+    </aside>
+
+    <section class="content-panel">
+      <h2>Short Links</h2>
+
+      <p class="section-intro">
+        Enter a destination URL and optionally choose a custom slug. Leave the slug empty if you want one to be generated automatically.
+      </p>
+
+      <p class="form-note" id="shortlinkAccessNote">
+        You must be logged in to create short links.
+      </p>
+
+      <form class="shortlink-form" id="shortlinkForm">
+        <div class="form-row">
+          <label for="destinationURL">Destination URL</label>
+          <input
+            type="url"
+            id="destinationURL"
+            name="destinationURL"
+            placeholder="https://example.com/very/long/link"
+            required
+          />
+        </div>
+
+        <div class="form-row">
+          <label for="slug">Slug</label>
+          <input
+            type="text"
+            id="slug"
+            name="slug"
+            placeholder="example"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <p class="form-note">
+            Final short link preview:
+            <strong id="slugPreview">go.baloony.xyz/auto-generated</strong>
+          </p>
+        </div>
+
+        <div class="button-row">
+          <button id="checkSlugBtn" class="secondary-btn" type="button" disabled>Check slug</button>
+          <button id="createShortlinkBtn" class="action-btn" type="submit" disabled>Create short link</button>
+        </div>
+
+        <p id="shortlinkStatus" class="status-message status-neutral" aria-live="polite"></p>
+      </form>
+
+      <div id="shortlinkResult" class="result-box hidden">
+        <h3>Short link created</h3>
+        <p>Copy this:</p>
+        <a id="createdShortlink" class="result-link" href="#" target="_blank" rel="noopener noreferrer"></a>
+        <div class="button-row">
+          <button id="copyShortlinkBtn" class="secondary-btn" type="button">Copy</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="auth.js"></script>
+  <script>
+    let currentLoggedInUser = null;
+
+    const destinationURLInput = document.getElementById("destinationURL");
+    const slugInput = document.getElementById("slug");
+    const slugPreview = document.getElementById("slugPreview");
+    const shortlinkForm = document.getElementById("shortlinkForm");
+    const shortlinkStatus = document.getElementById("shortlinkStatus");
+    const shortlinkAccessNote = document.getElementById("shortlinkAccessNote");
+    const checkSlugBtn = document.getElementById("checkSlugBtn");
+    const createShortlinkBtn = document.getElementById("createShortlinkBtn");
+    const shortlinkResult = document.getElementById("shortlinkResult");
+    const createdShortlink = document.getElementById("createdShortlink");
+    const copyShortlinkBtn = document.getElementById("copyShortlinkBtn");
+
+    function normalizeSlug(value) {
+      return value
+        .toLowerCase()
+        .trim()
+        .replace(/^\/+/, "")
+        .replace(/\/+$/, "")
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9._/-]/g, "")
+        .replace(/\/{2,}/g, "/");
+    }
+
+    function updatePreview() {
+      const cleaned = normalizeSlug(slugInput.value);
+      slugPreview.textContent = cleaned
+        ? `go.baloony.xyz/${cleaned}`
+        : "go.baloony.xyz/auto-generated";
+    }
+
+    function setStatus(message, kind = "neutral") {
+      shortlinkStatus.textContent = message;
+      shortlinkStatus.className = `status-message status-${kind}`;
+    }
+
+    function setLoggedInState(isLoggedIn) {
+      checkSlugBtn.disabled = !isLoggedIn;
+      createShortlinkBtn.disabled = !isLoggedIn;
+
+      if (isLoggedIn) {
+        shortlinkAccessNote.textContent = "You are logged in and can create short links.";
+      } else {
+        shortlinkAccessNote.textContent = "You must be logged in to create short links.";
+      }
+    }
+
+    async function setupShortlinksPage() {
+      try {
+        const res = await fetch("https://api.nic.baloony.xyz/api/me", {
+          credentials: "include"
+        });
+
+        const data = await res.json();
+
+        if (data.loggedIn) {
+          currentLoggedInUser = data.user;
+          setLoggedInState(true);
+        } else {
+          currentLoggedInUser = null;
+          setLoggedInState(false);
+        }
+      } catch (err) {
+        currentLoggedInUser = null;
+        setLoggedInState(false);
+        setStatus("Could not verify login status.", "error");
+      }
+    }
+
+    slugInput.addEventListener("input", updatePreview);
+    updatePreview();
+
+    checkSlugBtn.addEventListener("click", async () => {
+      if (!currentLoggedInUser) {
+        setStatus("You must be logged in to check a slug.", "error");
+        return;
+      }
+
+      const slug = normalizeSlug(slugInput.value);
+
+      if (!slug) {
+        setStatus("Enter a slug first.", "error");
+        return;
+      }
+
+      setStatus("Checking slug...", "neutral");
+
+      try {
+        const res = await fetch("https://api.nic.baloony.xyz/api/shortlinks/check", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include",
+          body: JSON.stringify({ slug })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Failed to check slug");
+        }
+
+        if (data.exists) {
+          setStatus("That slug already exists.", "error");
+        } else {
+          setStatus("That slug is available.", "success");
+        }
+      } catch (err) {
+        setStatus(err.message || "Failed to check slug.", "error");
+      }
+    });
+
+    shortlinkForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!currentLoggedInUser) {
+        setStatus("You must be logged in to create a short link.", "error");
+        return;
+      }
+
+      const destinationURL = destinationURLInput.value.trim();
+      const slug = normalizeSlug(slugInput.value);
+
+      if (!destinationURL) {
+        setStatus("Please enter a destination URL.", "error");
+        return;
+      }
+
+      setStatus("Creating short link...", "neutral");
+      shortlinkResult.classList.add("hidden");
+
+      try {
+        const res = await fetch("https://api.nic.baloony.xyz/api/shortlinks/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            destinationURL,
+            slug
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Failed to create short link");
+        }
+
+        createdShortlink.textContent = data.shortURL;
+        createdShortlink.href = data.shortURL;
+        shortlinkResult.classList.remove("hidden");
+        setStatus("Short link created successfully.", "success");
+      } catch (err) {
+        setStatus(err.message || "Failed to create short link.", "error");
+      }
+    });
+
+    copyShortlinkBtn.addEventListener("click", async () => {
+      const value = createdShortlink.textContent.trim();
+      if (!value) return;
+
+      try {
+        await navigator.clipboard.writeText(value);
+        setStatus("Short link copied.", "success");
+      } catch {
+        setStatus("Could not copy automatically. Please copy it manually.", "error");
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", setupShortlinksPage);
+  </script>
+</body>
+</html>
