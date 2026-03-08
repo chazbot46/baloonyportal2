@@ -144,6 +144,8 @@
 
       <p class="section-intro">
         This service lets Baloony members request a personal <code>@baloony.xyz</code> e-mail address.
+        Provided by Zoho. Data stored in the EU.
+        ! ONE MAILBOX PER PERSON !
       </p>
 
       <div class="action-row">
@@ -162,7 +164,7 @@
       </div>
 
       <p class="form-note" id="mailboxAccessNote">
-        You must be logged in to request a mailbox.
+        You must be logged in to create a mailbox.
       </p>
 
       <div class="mailbox-form-wrapper hidden" id="mailboxFormWrapper">
@@ -175,7 +177,7 @@
               type="text"
               id="emailLocalPart"
               name="emailLocalPart"
-              placeholder="for example: branislav"
+              placeholder="for example: chaz"
               autocomplete="off"
               spellcheck="false"
               required
@@ -183,16 +185,7 @@
             <p class="form-note">Your mailbox will be requested as <strong><span id="emailPreview">yourname</span>@baloony.xyz</strong>.</p>
           </div>
 
-          <div class="form-row">
-            <label for="requestReason">Reason or note</label>
-            <textarea
-              id="requestReason"
-              name="requestReason"
-              placeholder="Optional note about what you want this mailbox for"
-            ></textarea>
-          </div>
-
-          <button class="action-btn" type="submit">Submit request</button>
+          <button class="action-btn" type="submit">Submit</button>
         </form>
 
         <p id="mailboxStatus" class="status-message" aria-live="polite"></p>
