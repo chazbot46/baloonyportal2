@@ -80,18 +80,12 @@
       font-weight: 700;
     }
 
-    .mailbox-form input,
-    .mailbox-form textarea {
+    .mailbox-form input {
       width: 100%;
       padding: 0.85rem 1rem;
       border: 1px solid #cfd6e4;
       border-radius: 0.75rem;
       font: inherit;
-    }
-
-    .mailbox-form textarea {
-      min-height: 110px;
-      resize: vertical;
     }
 
     .form-note {
@@ -143,9 +137,8 @@
       <h2>E-mail</h2>
 
       <p class="section-intro">
-        <p>This service lets Baloony members request a personal <code>@baloony.xyz</code> e-mail address.
-        <p>Provided by Zoho. Data stored in the EU.
-        <p>! ONE MAILBOX PER PERSON !
+        This service lets Baloony members request a personal <code>@baloony.xyz</code> e-mail address.
+      <p> NOTE: One mailbox per person!
       </p>
 
       <div class="action-row">
@@ -168,7 +161,7 @@
       </p>
 
       <div class="mailbox-form-wrapper hidden" id="mailboxFormWrapper">
-        <h3>Mailbox request</h3>
+        <h3>Mailbox creation</h3>
 
         <form class="mailbox-form" id="mailboxForm">
           <div class="form-row">
@@ -177,12 +170,15 @@
               type="text"
               id="emailLocalPart"
               name="emailLocalPart"
-              placeholder="for example: chaz"
+              placeholder="for example: branislav"
               autocomplete="off"
               spellcheck="false"
               required
             />
-            <p class="form-note">Your mailbox will be requested as <strong><span id="emailPreview">yourname</span>@baloony.xyz</strong>.</p>
+            <p class="form-note">
+              Your mailbox will be registered as
+              <strong><span id="emailPreview">yourname</span>@baloony.xyz</strong>.
+            </p>
           </div>
 
           <button class="action-btn" type="submit">Submit</button>
@@ -259,7 +255,6 @@
       }
 
       const cleanedLocalPart = normalizeMailboxName(emailLocalPart.value);
-      const reason = document.getElementById("requestReason").value.trim();
 
       if (!cleanedLocalPart) {
         mailboxStatus.textContent = "Please enter a valid mailbox name.";
@@ -278,8 +273,7 @@
           },
           credentials: "include",
           body: JSON.stringify({
-            emailLocalPart: cleanedLocalPart,
-            reason
+            emailLocalPart: cleanedLocalPart
           })
         });
 
