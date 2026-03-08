@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-mail - Baloony Electronic Services</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .action-row {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+    }
+
+    .action-btn {
+      appearance: none;
+      border: none;
+      background: linear-gradient(#2b648f, #1f4f7d);
+      color: #fff;
+      padding: 0.9rem 1.2rem;
+      border-radius: 0.5rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .action-btn:hover,
+    .action-btn:focus-visible {
+      background: linear-gradient(#24597f, #173f63);
+    }
+
+    .secondary-btn {
+      appearance: none;
+      border: 1px solid #b8bcc2;
+      background: #f3f4f6;
+      color: #334155;
+      padding: 0.9rem 1.2rem;
+      border-radius: 0.5rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .secondary-btn:hover,
+    .secondary-btn:focus-visible {
+      background: #e6e8eb;
+    }
+
+    .secondary-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .mailbox-form-wrapper {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      border: 1px solid #cfd6e4;
+      border-radius: 1rem;
+      background: #fff;
+    }
+
+    .mailbox-form-wrapper.hidden {
+      display: none;
+    }
+
+    .mailbox-form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .form-row label {
+      font-weight: 700;
+    }
+
+    .mailbox-form input,
+    .mailbox-form textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1px solid #cfd6e4;
+      border-radius: 0.75rem;
+      font: inherit;
+    }
+
+    .mailbox-form textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .form-note {
+      color: #475569;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .status-message {
+      margin-top: 1rem;
+      font-weight: 700;
+    }
+
+    .status-success {
+      color: #166534;
+    }
+
+    .status-error {
+      color: #b91c1c;
+    }
+  </style>
+</head>
+<body>
+  <header class="top-header">
+    <div>
+      <p class="eyebrow">Bal-nic</p>
+      <h1>Baloony Electronic Services</h1>
+    </div>
+
+    <div class="auth-area">
+      <span id="user">Checking login...</span>
+      <button id="authButton" onclick="loginDiscord()" class="portal-btn">
+        Login with Discord
+      </button>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Menu</a>
+  </nav>
+
+  <main class="page-layout" id="services">
+    <aside class="side-panel">
+      <h2>E-mail</h2>
+      <p>Request your own <code>@baloony.xyz</code> mailbox and access the Baloony webmail.</p>
+    </aside>
+
+    <section class="content-panel">
+      <h2>E-mail</h2>
+
+      <p class="section-intro">
+        This service lets Baloony members request a personal <code>@baloony.xyz</code> e-mail address.
+      </p>
+
+      <div class="action-row">
+        <a
+          class="action-btn"
+          href="https://mail.zoho.eu/zm"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open Webmail
+        </a>
+
+        <button id="createMailboxBtn" class="secondary-btn" type="button" disabled>
+          Create mailbox
+        </button>
+      </div>
+
+      <p class="form-note" id="mailboxAccessNote">
+        You must be logged in to request a mailbox.
+      </p>
+
+      <div class="mailbox-form-wrapper hidden" id="mailboxFormWrapper">
+        <h3>Mailbox request</h3>
+
+        <form class="mailbox-form" id="mailboxForm">
+          <div class="form-row">
+            <label for="emailLocalPart">Desired e-mail address</label>
+            <input
+              type="text"
+              id="emailLocalPart"
+              name="emailLocalPart"
+              placeholder="for example: branislav"
+              autocomplete="off"
+              spellcheck="false"
+              required
+            />
+            <p class="form-note">Your mailbox will be requested as <strong><span id="emailPreview">yourname</span>@baloony.xyz</strong>.</p>
+          </div>
+
+          <div class="form-row">
+            <label for="requestReason">Reason or note</label>
+            <textarea
+              id="requestReason"
+              name="requestReason"
+              placeholder="Optional note about what you want this mailbox for"
+            ></textarea>
+          </div>
+
+          <button class="action-btn" type="submit">Submit request</button>
+        </form>
+
+        <p id="mailboxStatus" class="status-message" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="auth.js"></script>
+  <script>
+    let currentLoggedInUser = null;
+
+    const createMailboxBtn = document.getElementById("createMailboxBtn");
+    const mailboxFormWrapper = document.getElementById("mailboxFormWrapper");
+    const mailboxForm = document.getElementById("mailboxForm");
+    const mailboxStatus = document.getElementById("mailboxStatus");
+    const mailboxAccessNote = document.getElementById("mailboxAccessNote");
+    const emailLocalPart = document.getElementById("emailLocalPart");
+    const emailPreview = document.getElementById("emailPreview");
+
+    function normalizeMailboxName(value) {
+      return value
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "")
+        .replace(/[^a-z0-9._-]/g, "");
+    }
+
+    emailLocalPart.addEventListener("input", () => {
+      const cleaned = normalizeMailboxName(emailLocalPart.value);
+      emailPreview.textContent = cleaned || "yourname";
+    });
+
+    createMailboxBtn.addEventListener("click", () => {
+      if (!currentLoggedInUser) return;
+      mailboxFormWrapper.classList.toggle("hidden");
+    });
+
+    async function setupMailboxPage() {
+      try {
+        const res = await fetch("https://api.nic.baloony.xyz/api/me", {
+          credentials: "include"
+        });
+
+        const data = await res.json();
+
+        if (data.loggedIn) {
+          currentLoggedInUser = data.user;
+          createMailboxBtn.disabled = false;
+          mailboxAccessNote.textContent = "You are logged in and can request a mailbox.";
+        } else {
+          currentLoggedInUser = null;
+          createMailboxBtn.disabled = true;
+          mailboxFormWrapper.classList.add("hidden");
+          mailboxAccessNote.textContent = "You must be logged in to request a mailbox.";
+        }
+      } catch (err) {
+        currentLoggedInUser = null;
+        createMailboxBtn.disabled = true;
+        mailboxFormWrapper.classList.add("hidden");
+        mailboxAccessNote.textContent = "Could not verify login status.";
+      }
+    }
+
+    mailboxForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!currentLoggedInUser) {
+        mailboxStatus.textContent = "You must be logged in to submit this form.";
+        mailboxStatus.className = "status-message status-error";
+        return;
+      }
+
+      const cleanedLocalPart = normalizeMailboxName(emailLocalPart.value);
+      const reason = document.getElementById("requestReason").value.trim();
+
+      if (!cleanedLocalPart) {
+        mailboxStatus.textContent = "Please enter a valid mailbox name.";
+        mailboxStatus.className = "status-message status-error";
+        return;
+      }
+
+      mailboxStatus.textContent = "Submitting request...";
+      mailboxStatus.className = "status-message";
+
+      try {
+        const res = await fetch("https://api.nic.baloony.xyz/api/requests/mailbox", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            emailLocalPart: cleanedLocalPart,
+            reason
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Request failed");
+        }
+
+        mailboxStatus.textContent = "Mailbox request submitted successfully.";
+        mailboxStatus.className = "status-message status-success";
+        mailboxForm.reset();
+        emailPreview.textContent = "yourname";
+        mailboxFormWrapper.classList.add("hidden");
+      } catch (err) {
+        mailboxStatus.textContent = err.message || "Failed to submit request.";
+        mailboxStatus.className = "status-message status-error";
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", setupMailboxPage);
+  </script>
+</body>
+</html>
