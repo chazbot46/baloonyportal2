@@ -15,11 +15,9 @@
       background: #fff;
       max-width: 42rem;
     }
-
     .form-panel .govuk-form-group {
       margin-bottom: 1rem;
     }
-
     .form-panel .govuk-hint {
       margin-top: 0.4rem;
     }
@@ -31,7 +29,6 @@
       <p class="eyebrow">Bal-nic</p>
       <h1>Baloony Electronic Services</h1>
     </div>
-
     <div class="auth-area">
       <span id="user">Checking login...</span>
       <button id="authButton" onclick="loginDiscord()" class="portal-btn">
@@ -39,46 +36,120 @@
       </button>
     </div>
   </header>
-
   <nav class="main-nav" aria-label="Main navigation">
     <a href="index.html">Menu</a>
   </nav>
-
   <main class="page-layout" id="services">
     <aside class="side-panel">
       <h2>BDMC registration</h2>
       <p>Request access to BDMC using the registration form.</p>
     </aside>
-
     <section class="content-panel">
       <h2>Request BDMC access</h2>
       <p class="section-intro">Use this form to create an account to BDMC</p>
-
       <div class="form-panel">
-        <form>
-          <div class="govuk-form-group">
-            <label class="govuk-label" for="bdmc-email">E-mail</label>
-            <div id="bdmc-email-hint" class="govuk-hint">
-              This will be the e-mail address you will use for signing in, this is also where your login credentials will be sent.
-            </div>
-            <input
-              class="govuk-input"
-              id="bdmc-email"
-              name="bdmc-email"
-              type="email"
-              autocomplete="email"
-              aria-describedby="bdmc-email-hint"
-            />
+        <div class="govuk-form-group" id="email-group">
+          <label class="govuk-label" for="bdmc-email">E-mail</label>
+          <div id="bdmc-email-hint" class="govuk-hint">
+            This will be the e-mail address you will use for signing in. Your login credentials will be sent here.
           </div>
-
-          <button type="submit" class="govuk-button" data-module="govuk-button">
-            Submit
-          </button>
-        </form>
+          <input
+            class="govuk-input"
+            id="bdmc-email"
+            name="bdmc-email"
+            type="email"
+            autocomplete="email"
+            aria-describedby="bdmc-email-hint"
+          />
+        </div>
+        <div id="form-feedback" style="display:none; margin-bottom: 1rem;"></div>
+        <button type="button" class="govuk-button" id="bdmc-submit">
+          Submit
+        </button>
       </div>
     </section>
   </main>
-
   <script src="auth.js"></script>
+  <script>
+    document.getElementById("bdmc-submit").addEventListener("click", async () => {
+      const emailInput = document.getElementById("bdmc-email");
+      const feedback = document.getElementById("form-feedback");
+      const emailGroup = document.getElementById("email-group");
+      const btn = document.getElementById("bdmc-submit");
+
+      feedback.style.display = "none";
+      feedback.className = "";
+      feedback.style.color = "";
+      emailGroup.classList.remove("govuk-form-group--error");
+      emailInput.classList.remove("govuk-input--error");
+
+      // Check login state before anything else
+      try {
+        const meRes = await fetch("https://api.nic.baloony.xyz/api/me", { credentials: "include" });
+        const meData = await meRes.json();
+        if (!meData.loggedIn) {
+          feedback.style.display = "block";
+          feedback.className = "govuk-error-message";
+          feedback.textContent = "You must be logged in with Discord to submit this form.";
+          return;
+        }
+      } catch {
+        feedback.style.display = "block";
+        feedback.className = "govuk-error-message";
+        feedback.textContent = "Could not verify login status. Please try again.";
+        return;
+      }
+
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        emailGroup.classList.add("govuk-form-group--error");
+        emailInput.classList.add("govuk-input--error");
+        feedback.style.display = "block";
+        feedback.className = "govuk-error-message";
+        feedback.textContent = "Please enter your e-mail address.";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Submitting...";
+
+      try {
+        const res = await fetch("https://api.nic.baloony.xyz/api/requests/bdmc", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ email })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          emailGroup.classList.add("govuk-form-group--error");
+          emailInput.classList.add("govuk-input--error");
+          feedback.style.display = "block";
+          feedback.className = "govuk-error-message";
+          feedback.textContent = data.error || "Something went wrong. Please try again.";
+          btn.disabled = false;
+          btn.textContent = "Submit";
+          return;
+        }
+
+        feedback.style.display = "block";
+        feedback.className = "govuk-body";
+        feedback.style.color = "#00703c";
+        feedback.textContent = "✅ Your registration request has been submitted. You will receive your credentials by e-mail.";
+        emailInput.disabled = true;
+        btn.disabled = true;
+        btn.textContent = "Submitted";
+      } catch (err) {
+        feedback.style.display = "block";
+        feedback.className = "govuk-error-message";
+        feedback.textContent = "Network error. Please check your connection and try again.";
+        btn.disabled = false;
+        btn.textContent = "Submit";
+      }
+    });
+  </script>
 </body>
 </html>
