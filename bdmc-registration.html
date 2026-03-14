@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BDMC Registration - Baloony Electronic Services</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="idsk-frontend.min.css" />
+  <style>
+    .form-panel {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border: 1px solid #cfd6e4;
+      border-radius: 1rem;
+      background: #fff;
+      max-width: 42rem;
+    }
+
+    .form-panel .govuk-form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-panel .govuk-hint {
+      margin-top: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="top-header">
+    <div>
+      <p class="eyebrow">Bal-nic</p>
+      <h1>Baloony Electronic Services</h1>
+    </div>
+
+    <div class="auth-area">
+      <span id="user">Checking login...</span>
+      <button id="authButton" onclick="loginDiscord()" class="portal-btn">
+        Login with Discord
+      </button>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Menu</a>
+  </nav>
+
+  <main class="page-layout" id="services">
+    <aside class="side-panel">
+      <h2>BDMC registration</h2>
+      <p>Request access to BDMC using the registration form.</p>
+    </aside>
+
+    <section class="content-panel">
+      <h2>Request BDMC access</h2>
+      <p class="section-intro">Use this form to create an account to BDMC</p>
+
+      <div class="form-panel">
+        <form>
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="bdmc-email">E-mail</label>
+            <div id="bdmc-email-hint" class="govuk-hint">
+              This will be the e-mail address you will use for signing in, this is also where your login credentials will be sent.
+            </div>
+            <input
+              class="govuk-input"
+              id="bdmc-email"
+              name="bdmc-email"
+              type="email"
+              autocomplete="email"
+              aria-describedby="bdmc-email-hint"
+            />
+          </div>
+
+          <button type="submit" class="govuk-button" data-module="govuk-button">
+            Submit
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="auth.js"></script>
+</body>
+</html>
