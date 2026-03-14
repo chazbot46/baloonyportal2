@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Domain Management - Baloony Electronic Services</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+  </style>
+</head>
+<body>
+  <header class="top-header">
+    <div>
+      <p class="eyebrow">Bal-nic</p>
+      <h1>Baloony Electronic Services</h1>
+    </div>
+
+    <div class="auth-area">
+      <span id="user">Checking login...</span>
+      <button id="authButton" onclick="loginDiscord()" class="portal-btn">
+        Login with Discord
+      </button>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Menu</a>
+  </nav>
+
+  <main class="page-layout" id="services">
+    <aside class="side-panel">
+      <h2>Domain Management</h2>
+      <p>Information on how to manage your <code>baloony.xyz</code> sub-domains.</p>
+    </aside>
+
+    <section class="content-panel">
+      <h2>Domain Management</h2>
+
+      <p class="section-intro">
+        In order to create or manage your domain, you must sign-in to the Baloony Domain Management Center.
+      </p>
+      <p>The Domain Management Center requires its own account, you can request one here.
+      </p>
+    </section>
+  </main>
+
+  <script src="auth.js"></script>
+  <script>
+    let currentLoggedInUser = null;
+    
+    async function setupPage() {
+      try {
+        const res = await fetch("https://api.nic.baloony.xyz/api/me", {
+          credentials: "include"
+        });
+
+        const data = await res.json();
+
+        if (data.loggedIn) {
+          currentLoggedInUser = data.user;
+        } else {
+          currentLoggedInUser = null;
+        }
+      } catch (err) {
+        currentLoggedInUser = null;
+        console.error("Could not verify login status.", err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", setupPage);
+  </script>
+</body>
+</html>
