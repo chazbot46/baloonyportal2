@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- TODO: Update page title -->
+  <title>TODO: Page Title - Baloony Electronic Services</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* TODO: Add page-specific styles here */
+  </style>
+</head>
+<body>
+  <header class="top-header">
+    <div>
+      <p class="eyebrow">Bal-nic</p>
+      <h1>Baloony Electronic Services</h1>
+    </div>
+
+    <div class="auth-area">
+      <span id="user">Checking login...</span>
+      <button id="authButton" onclick="loginDiscord()" class="portal-btn">
+        Login with Discord
+      </button>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Menu</a>
+  </nav>
+
+  <main class="page-layout" id="services">
+    <aside class="side-panel">
+      <!-- TODO: Update sidebar heading and description -->
+      <h2>TODO: Page Name</h2>
+      <p>TODO: Short description of this service.</p>
+    </aside>
+
+    <section class="content-panel">
+      <!-- TODO: Update content heading and body -->
+      <h2>TODO: Page Name</h2>
+
+      <p class="section-intro">
+        TODO: Intro paragraph for this page.
+      </p>
+
+      <!-- TODO: Add page content here -->
+
+    </section>
+  </main>
+
+  <script src="auth.js"></script>
+  <script>
+    let currentLoggedInUser = null;
+
+    /**
+     * Checks login status via /api/me and stores the user.
+     * Called on DOMContentLoaded.
+     * TODO: Wire up any login-gated UI elements here (enable buttons, show sections, etc.)
+     */
+    async function setupPage() {
+      try {
+        const res = await fetch("https://api.nic.baloony.xyz/api/me", {
+          credentials: "include"
+        });
+
+        const data = await res.json();
+
+        if (data.loggedIn) {
+          currentLoggedInUser = data.user;
+          // TODO: Handle logged-in state (enable buttons, show forms, etc.)
+        } else {
+          currentLoggedInUser = null;
+          // TODO: Handle logged-out state (disable buttons, hide forms, etc.)
+        }
+      } catch (err) {
+        currentLoggedInUser = null;
+        // TODO: Handle error state
+        console.error("Could not verify login status.", err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", setupPage);
+  </script>
+</body>
+</html>
