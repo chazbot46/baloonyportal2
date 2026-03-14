@@ -1,257 +1,325 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Linking Bluesky Accounts to Domains - Baloony Electronic Services</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <style>
-    .guide-step {
-      margin-bottom: 2rem;
-    }
+<title>Linking Bluesky Accounts to Domains - Baloony Electronic Services</title>
 
-    .guide-step img {
-      width: 100%;
-      max-width: 700px;
-      border-radius: 8px;
-      margin-top: 0.7rem;
-      border: 1px solid #ccc;
-    }
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="idsk-frontend.min.css" />
 
-    .popup-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
+<style>
 
-    .popup {
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      max-width: 650px;
-      width: 90%;
-    }
+.guide-step {
+  margin-bottom: 2rem;
+}
 
-    .popup h3 {
-      margin-top: 0;
-    }
+.guide-step img {
+  width:100%;
+  max-width:700px;
+  border-radius:8px;
+  margin-top:0.7rem;
+  border:1px solid #ccc;
+  cursor:pointer;
+  transition:transform .15s ease;
+}
 
-    .popup button {
-      margin-top: 1rem;
-    }
+.guide-step img:hover{
+  transform:scale(1.02);
+}
 
-    .link-btn {
-      color: #c13b3b;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-  </style>
+/* popup */
+
+.popup-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+
+.popup{
+  background:white;
+  padding:2rem;
+  border-radius:10px;
+  max-width:650px;
+  width:90%;
+}
+
+.popup h3{
+  margin-top:0;
+}
+
+/* image viewer */
+
+.lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+}
+
+.lightbox img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:8px;
+}
+
+.link-btn{
+  color:#c13b3b;
+  cursor:pointer;
+  text-decoration:underline;
+}
+
+</style>
 </head>
 
 <body>
 
 <header class="top-header">
-  <div>
-    <p class="eyebrow">Bal-nic</p>
-    <h1>Baloony Electronic Services</h1>
-  </div>
+<div>
+<p class="eyebrow">Bal-nic</p>
+<h1>Baloony Electronic Services</h1>
+</div>
 
-  <div class="auth-area">
-    <span id="user">Checking login...</span>
-    <button id="authButton" onclick="loginDiscord()" class="portal-btn">
-      Login with Discord
-    </button>
-  </div>
+<div class="auth-area">
+<span id="user">Checking login...</span>
+<button id="authButton" onclick="loginDiscord()" class="portal-btn">
+Login with Discord
+</button>
+</div>
 </header>
 
 <nav class="main-nav" aria-label="Main navigation">
-  <a href="index.html">Menu</a>
+<a href="index.html">Menu</a>
 </nav>
 
 <main class="page-layout">
 
-  <aside class="side-panel">
-    <h2>Bluesky Domain Linking</h2>
-    <p>
-      Learn how to link your Bluesky account to a custom domain using
-      the Baloony Domain Management Center.
-    </p>
-  </aside>
+<aside class="side-panel">
+<h2>Bluesky Domain Linking</h2>
+<p>
+Learn how to link your Bluesky account to a custom domain using
+the Baloony Domain Management Center.
+</p>
+</aside>
 
-  <section class="content-panel">
+<section class="content-panel">
 
-    <h2>Link your Bluesky Account to a Domain</h2>
+<h2>Link your Bluesky Account to a Domain</h2>
 
-    <p class="section-intro">
-      This guide will walk you through creating a domain and linking it to
-      your Bluesky account so it becomes your Bluesky handle.
-    </p>
+<p class="section-intro">
+This guide walks you through creating a domain and linking it
+to your Bluesky account so it becomes your Bluesky handle.
+</p>
 
-    <div class="guide-step">
-      <h3>Step 1: Access the Domain Management Center</h3>
+<div class="guide-step">
+<h3>Step 1: Access the Domain Management Center</h3>
 
-      <p>
-        Open the
-        <a href="https://domainmanagement.nic.baloony.xyz" target="_blank">
-          Domain Management Center
-        </a>.
-      </p>
+<p>
+Open the
+<a href="https://domainmanagement.nic.baloony.xyz" target="_blank">
+Domain Management Center
+</a>.
+</p>
 
-      <p>
-        Log in with your credentials. If you don't have them yet,
-        request access
-        <a href="bdmc-registration.html">here</a>.
-      </p>
-    </div>
+<p>
+Log in with your credentials. If you don't have them yet,
+request access
+<a href="bdmc-registration.html">here</a>.
+</p>
+</div>
 
-    <div class="guide-step">
-      <h3>Step 2: Create your domain</h3>
 
-      <p>
-        Click <strong>"Create Domain"</strong>.
-      </p>
+<div class="guide-step">
+<h3>Step 2: Create your domain</h3>
 
-      <img src="/assets/image1.png" alt="Create domain button">
+<p>Click <strong>Create Domain</strong>.</p>
 
-      <p>
-        Type the handle you would like and submit the request.
-      </p>
+<img src="/assets/image1.png" onclick="openImage(this)" alt="Create domain">
 
-      <p>
-        Wait for the system to register your domain.
-      </p>
+<p>
+Enter the handle you would like and submit the request.
+Then wait for it to register.
+</p>
 
-      <img src="/assets/image2.png" alt="Domain registration interface">
-    </div>
+<img src="/assets/image2.png" onclick="openImage(this)" alt="Domain registration">
+</div>
 
-    <div class="guide-step">
-      <h3>Step 3: Link the domain to Bluesky</h3>
 
-      <p>
-        Once the domain shows <strong>"Active"</strong>, click
-        <strong>"Manage DNS"</strong>.
-      </p>
+<div class="guide-step">
+<h3>Step 3: Link the domain to Bluesky</h3>
 
-      <p>
-        Select the request type <strong>"Link to Bluesky"</strong>.
-      </p>
+<p>
+Once the domain shows <strong>Active</strong>,
+click <strong>Manage DNS</strong>.
+</p>
 
-      <img src="/assets/image3.png" alt="DNS management interface">
-    </div>
+<p>
+Select the request type
+<strong>Link to Bluesky</strong>.
+</p>
 
-    <div class="guide-step">
-      <h3>Step 4: Enter your Bluesky DID</h3>
+<img src="/assets/image3.png" onclick="openImage(this)" alt="DNS management">
+</div>
 
-      <p>
-        Enter your Bluesky DID value.
-      </p>
 
-      <p>
-        If you don't know how to find it, click
-        <span class="link-btn" onclick="openPopup()">here</span>.
-      </p>
+<div class="guide-step">
+<h3>Step 4: Enter your Bluesky DID</h3>
 
-      <p>
-        After submitting the request, it may take a few minutes to process.
-        Once finished, you will receive a confirmation email.
-      </p>
-    </div>
+<p>
+Enter your Bluesky DID value.
+</p>
 
-    <div class="guide-step">
-      <h3>Step 5: Change your Bluesky handle</h3>
+<p>
+If you don't know how to find it,
+click <span class="link-btn" onclick="openPopup()">here</span>.
+</p>
 
-      <p>
-        Once your domain has been successfully linked, you can set it
-        as your Bluesky handle.
-      </p>
+<p>
+Press submit. Processing may take a few minutes.
+Once complete you will receive a confirmation email.
+</p>
 
-      <ol>
-        <li>Open Bluesky.</li>
-        <li>Go to <strong>Settings</strong>.</li>
-        <li>Select <strong>Account</strong>.</li>
-        <li>Click <strong>Handle</strong>.</li>
-        <li>Enter your new domain handle (example: <code>yourname.baloony.xyz</code>).</li>
-        <li>Confirm the change.</li>
-      </ol>
+</div>
 
-      <p>
-        Bluesky will verify the domain automatically using the DNS
-        configuration you created earlier.
-      </p>
 
-    </div>
+<div class="guide-step">
+<h3>Step 5: Set your custom Bluesky handle</h3>
 
-  </section>
+<ol>
+<li>Open Bluesky.</li>
+<li>Go to <strong>Settings</strong>.</li>
+<li>Select <strong>Account</strong>.</li>
+<li>Open <strong>Handle</strong>.</li>
+<li>Enter your domain handle (example: <code>yourname.baloony.xyz</code>).</li>
+<li>Confirm the change.</li>
+</ol>
+
+<p>
+Bluesky will automatically verify the domain
+using the DNS configuration you created earlier.
+</p>
+
+</div>
+
+</section>
 </main>
 
 
+
+<!-- DID HELP POPUP -->
+
 <div class="popup-overlay" id="didPopup">
 
-  <div class="popup">
-    <h3>How to find your Bluesky DID</h3>
+<div class="popup">
 
-    <ol>
-      <li>Open Bluesky in your browser.</li>
-      <li>Open your profile page.</li>
-      <li>Open the browser developer tools (usually <strong>F12</strong>).</li>
-      <li>Go to the <strong>Network</strong> tab.</li>
-      <li>Reload the page.</li>
-      <li>Look for a request containing your profile data.</li>
-      <li>Your DID will look like this:</li>
-    </ol>
+<h3>How to find your Bluesky DID</h3>
 
-    <pre>did:plc:xxxxxxxxxxxxxxxx</pre>
+<p>
+You can easily find your DID directly inside Bluesky:
+</p>
 
-    <p>
-      Copy this value and paste it into the Domain Management Center
-      request form.
-    </p>
+<ol>
+<li>Open Bluesky.</li>
+<li>Go to <strong>Settings</strong>.</li>
+<li>Select <strong>Account</strong>.</li>
+<li>Open <strong>Handle</strong>.</li>
+<li>Click <strong>Use Custom Domain</strong>.</li>
+</ol>
 
-    <button onclick="closePopup()">Close</button>
+<p>
+Your DID will be displayed there and will look like:
+</p>
 
-  </div>
+<pre>did:plc:xxxxxxxxxxxxxxxx</pre>
+
+<p>
+Copy that value and paste it into the
+Domain Management Center request form.
+</p>
+
+<button
+class="idsk-button idsk-button--secondary"
+onclick="closePopup()">
+Close
+</button>
+
 </div>
+</div>
+
+
+
+<!-- IMAGE LIGHTBOX -->
+
+<div class="lightbox" id="lightbox" onclick="closeImage()">
+<img id="lightboxImg">
+</div>
+
 
 
 <script src="auth.js"></script>
 
 <script>
+
 let currentLoggedInUser = null;
 
-async function setupPage() {
-  try {
-    const res = await fetch("https://api.nic.baloony.xyz/api/me", {
-      credentials: "include"
-    });
+async function setupPage(){
 
-    const data = await res.json();
+try{
 
-    if (data.loggedIn) {
-      currentLoggedInUser = data.user;
-    } else {
-      currentLoggedInUser = null;
-    }
+const res = await fetch(
+"https://api.nic.baloony.xyz/api/me",
+{credentials:"include"}
+);
 
-  } catch (err) {
-    currentLoggedInUser = null;
-    console.error("Could not verify login status.", err);
-  }
+const data = await res.json();
+
+if(data.loggedIn){
+currentLoggedInUser = data.user;
+}else{
+currentLoggedInUser = null;
 }
 
-function openPopup() {
-  document.getElementById("didPopup").style.display = "flex";
+}catch(err){
+
+currentLoggedInUser = null;
+console.error("Could not verify login status.", err);
+
 }
 
-function closePopup() {
-  document.getElementById("didPopup").style.display = "none";
+}
+
+function openPopup(){
+document.getElementById("didPopup").style.display="flex";
+}
+
+function closePopup(){
+document.getElementById("didPopup").style.display="none";
+}
+
+function openImage(img){
+
+const viewer=document.getElementById("lightbox");
+const viewerImg=document.getElementById("lightboxImg");
+
+viewerImg.src=img.src;
+viewer.style.display="flex";
+
+}
+
+function closeImage(){
+document.getElementById("lightbox").style.display="none";
 }
 
 document.addEventListener("DOMContentLoaded", setupPage);
+
 </script>
 
 </body>
