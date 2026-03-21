@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request Store Console Access - Baloony Electronic Services</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .embed-wrapper {
+      margin-top: 1.5rem;
+      border: 1px solid #cfd6e4;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: #fff;
+      min-height: 700px;
+    }
+
+    .embed-wrapper iframe {
+      display: block;
+      width: 100%;
+      min-height: 700px;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="top-header">
+    <div>
+      <p class="eyebrow">Bal-nic</p>
+      <h1>Baloony Electronic Services</h1>
+    </div>
+
+    <div class="auth-area">
+      <span id="user">Checking login...</span>
+      <button id="authButton" onclick="loginDiscord()" class="portal-btn">
+        Login with Discord
+      </button>
+    </div>
+  </header>
+
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">Menu</a>
+  </nav>
+
+  <main class="page-layout" id="services">
+    <aside class="side-panel">
+      <h2>Request Store Console Credentials</h2>
+      <p>Use this form to request credentials for accessing the Baloony Store's admin console.</p>
+    </aside>
+
+    <section class="content-panel">
+      <h2>Request Store Admin Credentials</h2>
+      <p class="section-intro">
+        Submit a request using the form below.
+      </p>
+
+      <div class="embed-wrapper">
+        <iframe
+          src="https://forms.baloony.xyz/request-store-admin.html"
+          loading="lazy"
+          width="100%"
+          height="700"
+          frameborder="0"
+          marginheight="0"
+          marginwidth="0"
+          title="Report Abuse"
+        ></iframe>
+      </div>
+    </section>
+  </main>
+
+
+  <script src="auth.js"></script>
+</body>
+</html>
